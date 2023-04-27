@@ -1,12 +1,12 @@
 class PCSVFile:
     def __init__(self, 
-                 path_file, 
-                 percent, 
-                 min_price,
-                 min_party,
-                 defaut_name,
-                 defaut_header,
-                 format_name_xlsx,
+                 path_file: str, 
+                 percent: float, 
+                 min_price: int,
+                 min_party: int,
+                 defaut_name: str,
+                 defaut_header: list,
+                 format_name_xlsx: str,
                  ) -> None:
         self.path_file = path_file
         self.percent = percent

@@ -6,3 +6,11 @@ def find_ymal():
         if file.find('.yaml') != -1:
             return file
     raise FileNotFoundError
+
+
+def find_csv():
+    listdir = os.listdir()
+    for file in listdir:
+        if file.find('.csv') != -1:
+            return file
+    raise FileNotFoundError
