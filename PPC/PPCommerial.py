@@ -1,4 +1,8 @@
 import csv
+import datetime
+import os
+
+import pandas
 
 from PPC.model import CSVRow
 
@@ -21,6 +25,11 @@ class PCSVFile:
         self.defaut_header = defaut_header
         self.format_name_xlsx = format_name_xlsx
 
+    def _get_now_data(self):
+        delta8h = datetime.timedelta(hours=8)
+        data = datetime.datetime.now(datetime.timezone.utc) + delta8h
+        return data.strftime("%d%m%y_%H%M")
+
     def to_excel(self):
         with open(self.path_file) as file_read:
             with open('_.csv', mode='w', encoding='utf-8-sig') as file_write:
@@ -42,3 +51,10 @@ class PCSVFile:
                     row.price = int(formatted_price * self.percent)
                     del row.provider
                     file_csv_write.writerow(row.to_list())
+
+        name_to_excel = self.format_name_xlsx.format(self._get_now_data())
+    
+        praise = pandas.read_csv('_.csv', sep='\t')
+        praise.to_excel(name_to_excel, index=False)
+
+        os.remove('_.csv')
