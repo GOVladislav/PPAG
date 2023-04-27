@@ -153,3 +153,5 @@ dmypy.json
 cython_debug/
 
 *.yaml
+RIFE_*
+.vscode

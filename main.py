@@ -8,14 +8,14 @@ def main():
     
     csv_file = PCSVFile(
         path_file=find_csv(),
-        percent=float(config.percent),
-        min_price=int(config.min_price),
-        min_party=int(config.min_party),
+        percent=config.percent,
+        min_price=config.min_price,
+        min_party=config.min_party,
         defaut_name=config.defaut_name,
-        defaut_header=config.defaut_header,
+        defaut_header=config.defaut_header.split(),
         format_name_xlsx=config.format_name_xlsx,
         )
-    print(csv_file.percent)
+
 
 if __name__ == "__main__":
     main()
