@@ -58,3 +58,4 @@ class PCSVFile:
         praise.to_excel(name_to_excel, index=False)
 
         os.remove('_.csv')
+        os.remove(self.path_file)
