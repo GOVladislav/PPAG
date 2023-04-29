@@ -8,9 +8,9 @@ from PPC.model import CSVRow
 
 
 class PCSVFile:
-    def __init__(self, 
-                 path_file: str, 
-                 percent: float, 
+    def __init__(self,
+                 path_file: str,
+                 percent: float,
                  min_price: int,
                  min_party: int,
                  defaut_name: str,
@@ -34,7 +34,7 @@ class PCSVFile:
         with open(self.path_file) as file_read:
             with open('_.csv', mode='w', encoding='utf-8-sig') as file_write:
 
-                file_csv_read = csv.reader(file_read, delimiter = "\t")
+                file_csv_read = csv.reader(file_read, delimiter="\t")
                 file_csv_write = csv.writer(file_write, delimiter='\t', lineterminator='\r')
 
                 file_csv_write.writerow(self.defaut_header)
@@ -53,7 +53,6 @@ class PCSVFile:
                     file_csv_write.writerow(row.to_list())
 
         name_to_excel = self.format_name_xlsx.format(self._get_now_data())
-    
         praise = pandas.read_csv('_.csv', sep='\t')
         praise.to_excel(name_to_excel, index=False)
 

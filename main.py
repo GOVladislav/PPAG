@@ -5,7 +5,6 @@ from utils import find_csv, find_ymal
 
 def main():
     config = setup_config(find_ymal())
-    
     csv_file = PCSVFile(
         path_file=find_csv(),
         percent=config.percent,
@@ -15,7 +14,6 @@ def main():
         defaut_header=config.defaut_header.split(),
         format_name_xlsx=config.format_name_xlsx,
         )
-    
     csv_file.to_excel()
 
 
