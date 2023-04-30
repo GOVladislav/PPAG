@@ -17,13 +17,3 @@ class CSVRow:
     def formatted_price(self) -> float:
         price = self.price.replace(',', '.').replace('\xa0', '').replace(' ', '')
         return float(price)
-
-
-@dataclass
-class Config:
-    percent: str
-    min_price: str
-    min_party: str
-    defaut_name: str
-    defaut_header: str
-    format_name_xlsx: str

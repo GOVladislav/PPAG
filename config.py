@@ -1,6 +1,16 @@
+from dataclasses import dataclass
+
 import yaml
 
-from PPC.model import Config
+
+@dataclass
+class Config:
+    percent: str
+    min_price: str
+    min_party: str
+    defaut_name: str
+    defaut_header: str
+    format_name_xlsx: str
 
 
 def setup_config(config_path: str) -> Config:
