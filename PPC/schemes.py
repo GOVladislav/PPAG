@@ -15,5 +15,5 @@ class CSVRow:
         return [self.vendor_code, self.name_detail, self.quantity, self.party, self.price, self.manufacturer]
 
     def formatted_price(self) -> float:
-        price = self.price.replace(',', '.').replace('\xa0', '').replace(' ', '')
+        price = self.price.translate(str.maketrans({',': '.', '\xa0': '', ' ': ''}))
         return float(price)

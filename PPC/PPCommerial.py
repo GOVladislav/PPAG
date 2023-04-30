@@ -4,7 +4,7 @@ import os
 
 import pandas
 
-from PPC.model import CSVRow
+from PPC.schemes import CSVRow
 
 
 class PCSVFile:
