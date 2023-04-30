@@ -12,7 +12,7 @@ class PCSVFile:
                  path_file: str,
                  percent: float,
                  min_price: int,
-                 min_party: int,
+                 min_party: str,
                  defaut_name: str,
                  defaut_header: list,
                  format_name_xlsx: str,
@@ -48,7 +48,7 @@ class PCSVFile:
                         row.name_detail = self.defaut_name
                     if row.party == '':
                         row.party = self.min_party
-                    row.price = int(formatted_price * self.percent)
+                    row.price = str(int(formatted_price * self.percent))
                     del row.provider
                     file_csv_write.writerow(row.to_list())
 

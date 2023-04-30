@@ -1,4 +1,5 @@
 import yaml
+
 from PPC.model import Config
 
 
@@ -15,5 +16,5 @@ def setup_config(config_path: str) -> Config:
             defaut_header=raw_config['DEFAUT_HEADER'],
             format_name_xlsx=raw_config['FORMAT_NAME_XLSX']
         )
-    
+
     return config
