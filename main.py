@@ -18,9 +18,8 @@ def main():
         min_price=int(config.min_price),
         defaut_name=config.defaut_name,
         defaut_header=config.defaut_header.split(),
-        format_name_xlsx=config.format_name_xlsx,
     )
-    csv_file.to_excel()
+    csv_file.to_excel(name_file=config.format_name_xlsx)
 
 
 if __name__ == "__main__":

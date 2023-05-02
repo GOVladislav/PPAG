@@ -34,14 +34,12 @@ class PCSVFile:
         min_price: int,
         defaut_name: str,
         defaut_header: list,
-        format_name_xlsx: str,
     ) -> None:
         self.path_file = path_file
         self.percent = percent
         self.min_price = min_price
         self.defaut_name = defaut_name
         self.defaut_header = defaut_header
-        self.format_name_xlsx = format_name_xlsx
 
     def _get_list(self, path: str) -> list[tuple]:
         csvrow: list[tuple] = []
@@ -65,8 +63,8 @@ class PCSVFile:
                 csvrow.append(row.to_tuple())
         return csvrow
 
-    def to_excel(self) -> None:
-        name_to_excel = self.format_name_xlsx.format(_get_now_data())
+    def to_excel(self, name_file: str) -> None:
+        name_to_excel = name_file.format(_get_now_data())
         row_csv = self._get_list(self.path_file)
         pandas.DataFrame(data=row_csv, columns=self.defaut_header).to_excel(name_to_excel, index=False)
         os.remove(self.path_file)
