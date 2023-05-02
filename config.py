@@ -7,7 +7,6 @@ import yaml
 class Config:
     percent: str
     min_price: str
-    min_party: str
     defaut_name: str
     defaut_header: str
     format_name_xlsx: str
@@ -21,7 +20,6 @@ def setup_config(config_path: str) -> Config:
         config = Config(
             percent=raw_config['PERCENT'],
             min_price=raw_config['MIN_PRICE'],
-            min_party=raw_config['MIN_PARTY'],
             defaut_name=raw_config['DEFAUT_NAME'],
             defaut_header=raw_config['DEFAUT_HEADER'],
             format_name_xlsx=raw_config['FORMAT_NAME_XLSX']

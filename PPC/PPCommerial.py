@@ -7,54 +7,66 @@ import pandas
 from PPC.schemes import CSVRow
 
 
+MIN_PARTY = 1
+
+
+def _formatted_price(price: str) -> int:
+    return int(
+        float(price.translate(str.maketrans({',': '.', '\xa0': '', ' ': ''})))
+    )
+
+
+def _formatted_party(party: str) -> int:
+    return MIN_PARTY if party == '' else int(party)
+
+
+def _get_now_data() -> str:
+    delta8h = datetime.timedelta(hours=8)
+    data = datetime.datetime.now(datetime.timezone.utc) + delta8h
+    return data.strftime("%d%m%y_%H%M")
+
+
 class PCSVFile:
-    def __init__(self,
-                 path_file: str,
-                 percent: float,
-                 min_price: int,
-                 min_party: str,
-                 defaut_name: str,
-                 defaut_header: list,
-                 format_name_xlsx: str,
-                 ) -> None:
+    def __init__(
+        self,
+        path_file: str,
+        percent: float,
+        min_price: int,
+        defaut_name: str,
+        defaut_header: list,
+        format_name_xlsx: str,
+    ) -> None:
         self.path_file = path_file
         self.percent = percent
         self.min_price = min_price
-        self.min_party = min_party
         self.defaut_name = defaut_name
         self.defaut_header = defaut_header
         self.format_name_xlsx = format_name_xlsx
 
-    def _get_now_data(self) -> str:
-        delta8h = datetime.timedelta(hours=8)
-        data = datetime.datetime.now(datetime.timezone.utc) + delta8h
-        return data.strftime("%d%m%y_%H%M")
+    def _get_list(self, path: str) -> list[tuple]:
+        csvrow: list[tuple] = []
+        with open(path) as file:
+            csv_read = csv.reader(file, delimiter="\t")
+            for row_csv in csv_read:
+                row = CSVRow(
+                    provider=row_csv[0],
+                    vendor_code=row_csv[1],
+                    name_detail=row_csv[2],
+                    quantity=int(row_csv[3]),
+                    party=_formatted_party(row_csv[4]),
+                    price=_formatted_price(row_csv[5]),
+                    manufacturer=row_csv[6],
+                )
+                if row.price < self.min_price:
+                    continue
+                if row.name_detail == '':
+                    row.name_detail = self.defaut_name
+                row.price = int(row.price * self.percent)
+                csvrow.append(row.to_tuple())
+        return csvrow
 
     def to_excel(self) -> None:
-        with open(self.path_file) as file_read:
-            with open('_.csv', mode='w', encoding='utf-8-sig') as file_write:
-
-                file_csv_read = csv.reader(file_read, delimiter="\t")
-                file_csv_write = csv.writer(file_write, delimiter='\t', lineterminator='\r')
-
-                file_csv_write.writerow(self.defaut_header)
-
-                for row in file_csv_read:
-                    row = CSVRow(*row)
-                    formatted_price = row.formatted_price()
-                    if formatted_price < self.min_price:
-                        continue
-                    if row.name_detail == '':
-                        row.name_detail = self.defaut_name
-                    if row.party == '':
-                        row.party = self.min_party
-                    row.price = str(int(formatted_price * self.percent))
-                    del row.provider
-                    file_csv_write.writerow(row.to_list())
-
-        name_to_excel = self.format_name_xlsx.format(self._get_now_data())
-        praise = pandas.read_csv('_.csv', sep='\t')
-        praise.to_excel(name_to_excel, index=False)
-
-        os.remove('_.csv')
+        name_to_excel = self.format_name_xlsx.format(_get_now_data())
+        row_csv = self._get_list(self.path_file)
+        pandas.DataFrame(data=row_csv, columns=self.defaut_header).to_excel(name_to_excel, index=False)
         os.remove(self.path_file)
