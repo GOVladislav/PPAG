@@ -1,7 +1,7 @@
 from loguru import logger
 
 from config import setup_config
-from PPC.PPCommerial import PCSVFile
+from PMC.PMCommerial import PriceManager
 from utils import find_csv, find_ymal
 
 
@@ -12,14 +12,15 @@ def main():
 
     config = setup_config(find_ymal())
 
-    csv_file = PCSVFile(
-        path_file=find_csv(),
-        percent=float(config.percent),
-        min_price=int(config.min_price),
-        defaut_name=config.defaut_name,
-        defaut_header=config.defaut_header.split(),
+    price = PriceManager(path_to_file=find_csv())
+    price.change_price(
+        percent=config.percent,
+        min_price=config.min_price,
     )
-    csv_file.to_excel(name_file=config.format_name_xlsx)
+    price.to_excel(
+        name_file=config.format_name_xlsx,
+        headers=config.defaut_header,
+    )
 
 
 if __name__ == "__main__":

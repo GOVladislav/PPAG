@@ -3,7 +3,6 @@ from dataclasses import dataclass
 
 @dataclass
 class CSVRow:
-    provider: str
     vendor_code: str
     name_detail: str
     quantity: int

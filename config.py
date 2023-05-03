@@ -5,10 +5,9 @@ import yaml
 
 @dataclass
 class Config:
-    percent: str
-    min_price: str
-    defaut_name: str
-    defaut_header: str
+    percent: float
+    min_price: int
+    defaut_header: list[str]
     format_name_xlsx: str
 
 
@@ -18,10 +17,9 @@ def setup_config(config_path: str) -> Config:
         raw_config = yaml.safe_load(f)
 
         config = Config(
-            percent=raw_config['PERCENT'],
-            min_price=raw_config['MIN_PRICE'],
-            defaut_name=raw_config['DEFAUT_NAME'],
-            defaut_header=raw_config['DEFAUT_HEADER'],
+            percent=float(raw_config['PERCENT']),
+            min_price=int(raw_config['MIN_PRICE']),
+            defaut_header=raw_config['DEFAUT_HEADER'].split(),
             format_name_xlsx=raw_config['FORMAT_NAME_XLSX']
         )
 
