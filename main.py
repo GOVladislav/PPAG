@@ -6,9 +6,10 @@ from utils import find_csv, find_ymal
 
 
 def main():
-    logger.add('debug.log', format='{time} {level} {message}',
-               level='DEBUG', rotation='1 day', compression='zip',
-               )
+    logger.add(
+        'debug.log', format='{time} {level} {message}',
+        level='DEBUG', rotation='1 week', compression='zip',
+    )
 
     config = setup_config(find_ymal())
 
