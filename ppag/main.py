@@ -1,7 +1,7 @@
 from loguru import logger
 
 from config import setup_config
-from PMC.PMCommerial import PriceManager
+from PMC.PMCommerсial import PriceManager
 from utils import find_csv, find_ymal
 
 
@@ -9,7 +9,7 @@ def main():
     config = setup_config(find_ymal())
 
     logger.add(
-        'debug.log', format='{time} {level} {message}',
+        'debug.log', format='{time} {level} {exception} {message}',
         level=config.level_logging, rotation='1 week', compression='zip',
     )
 
@@ -25,7 +25,4 @@ def main():
 
 
 if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        logger.error(e.args[0])
+    main()

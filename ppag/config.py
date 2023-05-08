@@ -13,6 +13,15 @@ class Config:
 
 
 def setup_config(config_path: str) -> Config:
+    '''
+        Функция для преобразования данных из config.yaml
+        в объект Config.
+
+        Параметры
+        ---------
+            config_path: str
+                Путь до конфигурационного файла.
+    '''
 
     with open(config_path, 'r', encoding='utf-8') as f:
         raw_config = yaml.safe_load(f)
