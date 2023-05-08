@@ -5,6 +5,7 @@ import yaml
 
 @dataclass
 class Config:
+    level_logging: str
     percent: float
     min_price: int
     defaut_header: list[str]
@@ -17,6 +18,7 @@ def setup_config(config_path: str) -> Config:
         raw_config = yaml.safe_load(f)
 
         config = Config(
+            level_logging=raw_config['LEVEL_LOGGING'],
             percent=float(raw_config['PERCENT']),
             min_price=int(raw_config['MIN_PRICE']),
             defaut_header=raw_config['DEFAUT_HEADER'].split(),

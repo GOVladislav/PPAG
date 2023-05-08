@@ -3,9 +3,8 @@ import datetime
 import os
 
 import pandas
-
+from errors import write_bad_row_to_file
 from PMC.schemes import CSVRow
-
 
 MIN_PARTY: int = 1
 DEFAULT_NAME: str = 'Автопринадлежность'
@@ -34,20 +33,24 @@ class PriceManager:
 
     def _get_list_details(self, path: str) -> list[tuple]:
         csvrow: list[tuple] = []
-        with open(path) as file:
+        with open(path, mode='r', encoding='windows-1251') as file:
             file_csv_read = csv.reader(file, delimiter="\t")
             for row_csv in file_csv_read:
-                row = CSVRow(
-                    vendor_code=row_csv[1],
-                    name_detail=row_csv[2],
-                    quantity=int(row_csv[3]),
-                    party=_formatted_party(row_csv[4]),
-                    price=_formatted_price(row_csv[5]),
-                    manufacturer=row_csv[6],
-                )
-                if row.name_detail == '':
-                    row.name_detail = DEFAULT_NAME
-                csvrow.append(row.to_tuple())
+                try:
+                    row = CSVRow(
+                        vendor_code=row_csv[1],
+                        name_detail=row_csv[2],
+                        quantity=int(row_csv[3]),
+                        party=_formatted_party(row_csv[4]),
+                        price=_formatted_price(row_csv[5]),
+                        manufacturer=row_csv[6],
+                    )
+                    if row.name_detail == '':
+                        row.name_detail = DEFAULT_NAME
+                    csvrow.append(row.to_tuple())
+                except ValueError as err:
+                    write_bad_row_to_file(row_csv, err)
+                    continue
         return csvrow
 
     def change_price(self, percent: float, min_price: int):

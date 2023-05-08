@@ -6,12 +6,12 @@ from utils import find_csv, find_ymal
 
 
 def main():
+    config = setup_config(find_ymal())
+
     logger.add(
         'debug.log', format='{time} {level} {message}',
-        level='DEBUG', rotation='1 week', compression='zip',
+        level=config.level_logging, rotation='1 week', compression='zip',
     )
-
-    config = setup_config(find_ymal())
 
     price = PriceManager(path_to_file=find_csv())
     price.change_price(
@@ -25,4 +25,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        logger.error(e.args[0])

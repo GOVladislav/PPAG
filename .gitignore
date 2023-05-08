@@ -154,5 +154,6 @@ cython_debug/
 
 *.yaml
 RIFE_*
+RIFA_*
 .vscode
 *.xlsx
