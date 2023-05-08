@@ -5,6 +5,14 @@ from loguru import logger
 
 
 def find_ymal():
+    '''
+        Функция ищит файл с расширением .yaml
+
+        Исключения
+        ----------
+        FileNotFoundError
+            Вызывается когда файл с расширением .yaml не найдет
+    '''
     listdir = os.listdir()
     for file in listdir:
         if file.find('.yaml') != -1:
@@ -14,6 +22,14 @@ def find_ymal():
 
 
 def find_csv():
+    '''
+        Функция ищит файл с расширением .csv
+
+        Исключения
+        ----------
+        FileNotFoundError
+            Вызывается когда файл с расширением .csv не найдет
+    '''
     listdir = os.listdir()
     for file in listdir:
         if file.find('.csv') != -1:
@@ -22,7 +38,7 @@ def find_csv():
     raise FileNotFoundError
 
 
-def time_it(func):
+def _time_it(func):
     def wrapper(*args, **kwargs):
         start = time.time()
         result = func(*args, **kwargs)
