@@ -4,14 +4,14 @@ import time
 from loguru import logger
 
 
-def find_ymal():
+def find_yaml() -> str:
     '''
         Функция ищит файл с расширением .yaml
 
         Исключения
         ----------
         FileNotFoundError
-            Вызывается когда файл с расширением .yaml не найдет
+            Вызывается когда файл с расширением .yaml не найден
     '''
     listdir = os.listdir()
     for file in listdir:
@@ -21,14 +21,14 @@ def find_ymal():
     raise FileNotFoundError
 
 
-def find_csv():
+def find_csv() -> str:
     '''
         Функция ищит файл с расширением .csv
 
         Исключения
         ----------
         FileNotFoundError
-            Вызывается когда файл с расширением .csv не найдет
+            Вызывается когда файл с расширением .csv не найден
     '''
     listdir = os.listdir()
     for file in listdir:

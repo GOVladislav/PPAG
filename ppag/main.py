@@ -2,11 +2,11 @@ from loguru import logger
 
 from config import setup_config
 from PMC.PMCommerсial import PriceManager
-from utils import find_csv, find_ymal
+from utils import find_csv, find_yaml
 
 
 def main():
-    config = setup_config(find_ymal())
+    config = setup_config(find_yaml())
 
     logger.add(
         'debug.log', format='{time} {level} {exception} {message}',
